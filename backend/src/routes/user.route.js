@@ -16,7 +16,7 @@ router.get("/profile/:username", getUserProfile);
 //protected routes
 router.get("/sync", protectRoutes, syncUser);
 router.get("/me", protectRoutes, getCurrentUser);
-router.get("/profile", protectRoutes, updateProfile);
+router.put("/profile", protectRoutes, updateProfile);
 router.get("/follow/:targetUserId", protectRoutes, followUser);
 
 export default router;
