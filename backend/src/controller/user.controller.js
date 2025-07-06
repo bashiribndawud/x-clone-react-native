@@ -25,15 +25,15 @@ export const syncUser = asyncHandler(async (req, res) => {
     }
     
     //create a new user from clerk data
-    const clearkUser = await clerkClient.users.getUser(userId);
+    const clerkUser = await clerkClient.users.getUser(userId);
 
     const userData = {
         clerkId: userId,
-        email: clearkUser.emailAddresses[0]?.emailAddress,
-        firstName: clearkUser.firstName,
-        lastName: clearkUser.lastName,
-        username: clearkUser.emailAddresses[0]?.emailAddress.split('@')[0],
-        profilePicture: clearkUser.imageUrl || "",
+        email: clerkUser.emailAddresses[0]?.emailAddress,
+        firstName: clerkUser.firstName,
+        lastName: clerkUser.lastName,
+        username: clerkUser.emailAddresses[0]?.emailAddress.split('@')[0],
+        profilePicture: clerkUser.imageUrl || "",
     }
 
     const newUser = await User.create(userData);
@@ -81,5 +81,5 @@ export const followUser = asyncHandler(async (req, res) => {
        })
    }
 
-   
+   return res.status(200).json({message: "Successfully followed the user", user: targetUser});
 })
