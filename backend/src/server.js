@@ -9,13 +9,15 @@ import notificationRoutes from "./routes/notification.route.js"
 
 import { ENV } from './config/env.js';
 import { connectDB } from './config/db.js';
+import { arcjetMiddleware } from './middleware/arcjet.middleware.js';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use(clerkMiddleware())
+app.use(clerkMiddleware()) // Middleware to handle Clerk authentication
+app.use(arcjetMiddleware()) // Arcjet middleware to protect against attacks and bots
 
 
 
@@ -26,7 +28,7 @@ app.get("/", (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
-app.use('/api/notification', notificationRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 
 // Error handling middleware
