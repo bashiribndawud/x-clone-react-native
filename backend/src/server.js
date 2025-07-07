@@ -23,10 +23,17 @@ app.get("/", (req, res) => {
   res.send("Welcome to the X Clone API");
 })
 
-app.use('/api/user', userRoutes);
-app.use('/api/post', postRoutes);
-app.use('/api/comment', commentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 app.use('/api/notification', notificationRoutes);
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: err.message || 'Internal Server Error' });
+});
 
 
 
