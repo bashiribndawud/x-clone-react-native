@@ -26,6 +26,11 @@ const notificationSchema = new mongoose.Schema({
         ref: 'Comment',
         default: null
     },
+    message: {
+        type: String,
+        required: false,
+        maxLength: 280
+    },
     read: {
         type: Boolean,
         default: false
