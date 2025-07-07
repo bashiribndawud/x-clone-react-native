@@ -3,7 +3,7 @@ import { ENV } from "../config/env.js";
 
 //initalize arcjet with secret rules
 export const arcjetConfig = arcjet({
-  key: ENV.CLERK_SECRET_KEY,
+  key: ENV.ARCJET_KEY,
   client: "x-clone-backend",
   log: console,
   characteristics: ["ip.src"],

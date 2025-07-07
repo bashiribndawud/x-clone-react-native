@@ -7,17 +7,17 @@ export const arcjetMiddleware = async (req, res, next) => {
 
     if (decision.isDenied) {
       if (decision.reason.isRateLimit()) {
-        res.status(429).json({
+        return res.status(429).json({
           error: "Too Many Requests",
           message: "Rate limit exceeded. Please try again later.",
         });
       } else if (decision.reason.isBot()) {
-        res.status(403).json({
+        return res.status(403).json({
           error: "Bot Detected",
           message: "Access denied: Bot detected",
         });
       } else {
-        res.status(403).json({
+        return res.status(403).json({
           error: "Forbidden",
           message: "Access denied by security policies",
         });
@@ -26,7 +26,7 @@ export const arcjetMiddleware = async (req, res, next) => {
 
     //check for spoofed bots
     if(decision.results.some((result) => result.reason.isBot() && result.reason.isSpoofed())) {
-        res.status(403).json({
+       return res.status(403).json({
             error: "Spoofed Bot Detected",
             message: "Access denied: Spoofed bot detected",
         });
