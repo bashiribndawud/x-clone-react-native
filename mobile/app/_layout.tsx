@@ -1,10 +1,30 @@
 import { Stack } from "expo-router";
-import "../global.css"
+import { ClerkProvider } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StatusBar } from "expo-status-bar";
+import "../global.css";
+import Constants from "expo-constants";
+
+const clerkKey = Constants.expoConfig?.extra?.clerkPublishableKey;
+
+const queryClient = new QueryClient();
+
 export default function RootLayout() {
-  return <Stack screenOptions={{
-    headerShown: false,
-    contentStyle: {
-      backgroundColor: "white"
-    }
-  }} />;
+  return (
+    <ClerkProvider publishableKey={clerkKey} tokenCache={tokenCache}>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen
+            name="(auth)"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(tabs)"
+          />
+        </Stack>
+        <StatusBar style="dark" />
+      </QueryClientProvider>
+    </ClerkProvider>
+  );
 }
